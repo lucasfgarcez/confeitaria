@@ -70,28 +70,20 @@ const produtoCards = document.querySelectorAll('.produto-card');
 
 produtoCards.forEach(card => {
     card.addEventListener('click', (e) => {
-        // Verifica se é mobile (largura <= 900px)
+        // Apenas em mobile (largura <= 900px)
         if (window.innerWidth <= 900) {
-            e.stopPropagation();
+            e.preventDefault();
             
-            // Remove a classe active de todos os outros cards
-            produtoCards.forEach(c => {
-                if (c !== card) {
+            // Se este card está ativo, desativa
+            if (card.classList.contains('active')) {
+                card.classList.remove('active');
+            } else {
+                // Se não, remove active de todos e adiciona apenas neste
+                produtoCards.forEach(c => {
                     c.classList.remove('active');
-                }
-            });
-            
-            // Toggle da classe active no card clicado
-            card.classList.toggle('active');
+                });
+                card.classList.add('active');
+            }
         }
     });
-});
-
-// Fechar overlay ao clicar fora
-document.addEventListener('click', () => {
-    if (window.innerWidth <= 900) {
-        produtoCards.forEach(card => {
-            card.classList.remove('active');
-        });
-    }
 });
