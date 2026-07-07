@@ -8,9 +8,12 @@ let timer;
 // Ajuste manual por slide: altere os valores abaixo conforme necessário.
 // Exemplo: '20% center' move a imagem para a esquerda, '80% center' move para a direita.
 const slidePositions = [
-    '80% center', // slide 1
-    '50% center', // slide 2
-    '20% center'  // slide 3
+    '50% center', // slide 1 - Doces Finos
+    '50% center', // slide 2 - Bolos Confeitados
+    '50% center', // slide 3 - Brownies
+    '50% center', // slide 4 - Páscoa
+    '50% center', // slide 5 - Natal
+    '50% center'  // slide 6 - Sobremesas Gourmet
 ];
 
 function applySlidePosition(index) {
@@ -61,3 +64,34 @@ function restartTimer() {
 createDots();
 slides.forEach((_, index) => applySlidePosition(index));
 restartTimer();
+
+// Funcionalidade de clique para cards do catálogo em mobile
+const produtoCards = document.querySelectorAll('.produto-card');
+
+produtoCards.forEach(card => {
+    card.addEventListener('click', (e) => {
+        // Verifica se é mobile (largura <= 900px)
+        if (window.innerWidth <= 900) {
+            e.stopPropagation();
+            
+            // Remove a classe active de todos os outros cards
+            produtoCards.forEach(c => {
+                if (c !== card) {
+                    c.classList.remove('active');
+                }
+            });
+            
+            // Toggle da classe active no card clicado
+            card.classList.toggle('active');
+        }
+    });
+});
+
+// Fechar overlay ao clicar fora
+document.addEventListener('click', () => {
+    if (window.innerWidth <= 900) {
+        produtoCards.forEach(card => {
+            card.classList.remove('active');
+        });
+    }
+});
